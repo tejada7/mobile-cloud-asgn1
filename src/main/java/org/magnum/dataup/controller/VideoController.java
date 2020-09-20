@@ -17,18 +17,18 @@
  */
 package org.magnum.dataup.controller;
 
-import com.sun.tools.javac.util.List;
 import org.magnum.dataup.model.Video;
 import org.magnum.dataup.model.VideoStatus;
 import org.magnum.dataup.service.VideoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.HttpClientErrorException;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Optional;
 
 /**
  * You will need to create one or more Spring controllers to fulfill the
@@ -70,7 +70,8 @@ public class VideoController {
     }
 
     @RequestMapping(path = "/video/{id}/data", method = RequestMethod.GET)
-    public Response getData(@PathVariable("id") long id) {
-        return null;
+    public @ResponseBody ResponseEntity<Video> getData(@PathVariable("id") long id) {
+        final Optional<Video> videoById = videoService.getVideoById(id);
+        return ResponseEntity.of(videoById);
     }
 }

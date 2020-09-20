@@ -3,8 +3,10 @@ package org.magnum.dataup.service;
 import org.magnum.dataup.model.Video;
 import org.magnum.dataup.repository.VideoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class VideoService {
@@ -25,5 +27,9 @@ public class VideoService {
 
     public Collection<Video> getAllVideos() {
         return noDuplicatesVideoRepository.getVideos();
+    }
+
+    public Optional<Video> getVideoById(long id) {
+        return noDuplicatesVideoRepository.findById(id);
     }
 }

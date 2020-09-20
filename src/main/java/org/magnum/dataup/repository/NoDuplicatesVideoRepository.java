@@ -3,10 +3,7 @@ package org.magnum.dataup.repository;
 import org.magnum.dataup.model.Video;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -39,6 +36,11 @@ public class NoDuplicatesVideoRepository implements VideoRepository {
             }
         }
         return matches;
+    }
+
+    @Override
+    public Optional<Video> findById(long id) {
+        return videoSet.stream().filter(video -> video.getId() == id).findFirst();
     }
 
 }

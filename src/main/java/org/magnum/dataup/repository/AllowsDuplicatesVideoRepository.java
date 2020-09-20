@@ -2,10 +2,7 @@ package org.magnum.dataup.repository;
 
 import org.magnum.dataup.model.Video;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AllowsDuplicatesVideoRepository implements VideoRepository {
@@ -37,6 +34,13 @@ public class AllowsDuplicatesVideoRepository implements VideoRepository {
             }
         }
         return matches;
+    }
+
+    @Override
+    public Optional<Video> findById(long id) {
+        return videoList.stream()
+                .filter(video -> id == video.getId())
+                .findFirst();
     }
 
 }
