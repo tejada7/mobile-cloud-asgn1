@@ -4,6 +4,8 @@ import org.magnum.dataup.model.Video;
 import org.magnum.dataup.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class VideoService {
 
@@ -19,5 +21,9 @@ public class VideoService {
         final Video videoWithId = videoEnricher.enrich(video);
         noDuplicatesVideoRepository.addVideo(videoWithId);
         return videoWithId;
+    }
+
+    public Collection<Video> getAllVideos() {
+        return noDuplicatesVideoRepository.getVideos();
     }
 }

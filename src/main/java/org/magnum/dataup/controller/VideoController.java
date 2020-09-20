@@ -56,8 +56,7 @@ public class VideoController {
 
     @RequestMapping(path = "/video", method = RequestMethod.GET)
     public @ResponseBody Collection<Video> getVideoList() {
-        System.out.println("Getting the list of videos:");
-        return null;
+        return videoService.getAllVideos();
     }
 
     @RequestMapping(path = "/video", method = RequestMethod.POST)
