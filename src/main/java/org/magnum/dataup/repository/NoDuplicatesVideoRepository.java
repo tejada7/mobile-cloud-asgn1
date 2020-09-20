@@ -1,6 +1,7 @@
 package org.magnum.dataup.repository;
 
 import org.magnum.dataup.model.Video;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Repository
 public class NoDuplicatesVideoRepository implements VideoRepository {
 
     // Sets only store one instance of each object and will not
