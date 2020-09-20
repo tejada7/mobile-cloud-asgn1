@@ -17,6 +17,7 @@
  */
 package org.magnum.dataup.controller;
 
+import org.apache.commons.io.IOUtils;
 import org.magnum.dataup.model.Video;
 import org.magnum.dataup.model.VideoStatus;
 import org.magnum.dataup.service.VideoService;
@@ -24,9 +25,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.multipart.MultipartFile;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -65,13 +68,12 @@ public class VideoController {
     }
 
     @RequestMapping(path = "/video/{id}/data", method = RequestMethod.POST)
-    public VideoStatus setVideoData(@PathVariable("id") long id, TypedFile videoData/*, MultipartFile*/) {
-        return null;
+    public @ResponseBody ResponseEntity<VideoStatus> setVideoData(@PathVariable("id") long id, /*TypedFile*/@RequestPart("data") MultipartFile videoData) throws IOException {
+        return ResponseEntity.of(videoService.addVideoData(id, videoData.getInputStream()));
     }
 
     @RequestMapping(path = "/video/{id}/data", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<Video> getData(@PathVariable("id") long id) {
-        final Optional<Video> videoById = videoService.getVideoById(id);
-        return ResponseEntity.of(videoById);
+    public @ResponseBody ResponseEntity<byte[]> getData(@PathVariable("id") long id) throws IOException {
+        return ResponseEntity.of(videoService.getVideoData(id));
     }
 }
